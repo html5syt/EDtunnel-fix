@@ -210,6 +210,9 @@ export function resetProxyCache() {
  * @returns {Promise<{socket: Socket, index: number}|null>} Connected socket and index, or null
  */
 export async function connectWithRotation(proxyAddresses, initialData, connect, log, timeout = 1500) {
+	if (typeof connect !== 'function') {
+		throw new Error('connectWithRotation: connect parameter is not a function');
+	}
 	const startIndex = cachedProxyIndex;
 
 	for (let i = 0; i < proxyAddresses.length; i++) {

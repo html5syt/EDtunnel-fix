@@ -14,6 +14,9 @@
  * @returns {Promise<import("@cloudflare/workers-types").Socket|undefined>} Connected socket or undefined on failure
  */
 export async function socks5Connect(addressType, addressRemote, portRemote, log, parsedSocks5Addr, connect) {
+	if (typeof connect !== 'function') {
+		throw new Error('socks5Connect: connect parameter is not a function');
+	}
 	const { username, password, hostname, port } = parsedSocks5Addr;
 
 	// Connect to the SOCKS server

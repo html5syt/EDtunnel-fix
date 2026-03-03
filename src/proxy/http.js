@@ -14,6 +14,9 @@
  * @returns {Promise<import("@cloudflare/workers-types").Socket|undefined>} Connected socket or undefined on failure
  */
 export async function httpConnect(addressType, addressRemote, portRemote, log, parsedHttpAddr, connect, initialData = new Uint8Array(0)) {
+	if (typeof connect !== 'function') {
+		throw new Error('httpConnect: connect parameter is not a function');
+	}
 	const { username, password, hostname, port } = parsedHttpAddr;
 
 	// Connect to HTTP proxy server
