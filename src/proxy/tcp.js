@@ -79,6 +79,9 @@ export async function handleTCPOutBound(remoteSocket, addressType, addressRemote
 	 * @returns {Promise<import("@cloudflare/workers-types").Socket>}
 	 */
 	async function connectDirect(address, port) {
+		if (typeof connect !== 'function') {
+			throw new Error('connectDirect: connect parameter is not a function');
+		}
 		log(`[TCP] Direct connecting to ${address}:${port}`);
 		const tcpSocket = connect({ hostname: address, port: port });
 		const writer = tcpSocket.writable.getWriter();
